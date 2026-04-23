@@ -2,15 +2,16 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://industry-knowledge-blocks.org/schema/runtime-layer.schema.json",
   "title": "Runtime Layer Schema",
-  "description": "Manages execution, state, runtime behavior, and execution-time control of knowledge blocks",
+  "description": "Execution control, revalidation, state management, and safe failure for Knowledge Blocks at runtime",
   "type": "object",
   "properties": {
     "execution": {
       "type": "object",
+      "description": "Execution parameters and constraints",
       "properties": {
         "engine": {
           "type": "string",
-          "description": "Execution engine or orchestration system used at runtime"
+          "description": "Execution engine or orchestration system (e.g., 'kubernetes', 'aws_lambda', 'airflow')"
         },
         "timeout": {
           "type": "integer",
@@ -20,169 +21,187 @@
         "retries": {
           "type": "integer",
           "minimum": 0,
-          "description": "Number of retry attempts allowed"
+          "description": "Number of retry attempts allowed on failure"
         },
         "parallel_execution": {
           "type": "boolean",
-          "description": "Whether execution may run in parallel"
+          "description": "Whether execution may run in parallel with other instances"
         },
         "execution_window": {
           "type": "string",
-          "description": "Allowed time window for execution or re-execution"
+          "description": "Time window during which execution is permitted (ISO 8601 interval or cron expression)"
         },
         "human_review_required": {
           "type": "boolean",
-          "description": "Whether human review is required before execution"
+          "description": "Whether human review is required before execution proceeds"
         }
       }
     },
     "execution_control": {
       "type": "object",
-      "description": "Deterministic controls applied at execution time before an action is allowed",
+      "description": "Deterministic controls enforced at runtime before execution is allowed. These controls gate execution based on revalidation results, risk assessment, and policy consistency.",
       "properties": {
         "requires_revalidation": {
           "type": "boolean",
-          "description": "Whether decision state must be revalidated before execution"
+          "description": "Whether Knowledge Block decision must be revalidated against current conditions before execution is permitted"
+        },
+        "required_authority": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "array", "items": {"type": "string"}}
+          ],
+          "description": "Required authority entity or entities (e.g., 'admin', 'compliance-officer', or ['approval-team-1', 'approval-team-2']). Used with authority_mode."
         },
         "authority_mode": {
           "type": "string",
           "enum": ["strict", "conditional", "advisory"],
-          "description": "How strictly authority checks are enforced at runtime"
+          "description": "Authority validation level: strict (revalidate authority at runtime), conditional (revalidate under specified conditions), advisory (no runtime re-check)"
         },
         "delta_threshold": {
           "type": "number",
           "minimum": 0,
           "maximum": 1,
-          "description": "Maximum tolerated drift between decision-time state and execution-time state"
-        },
-        "risk_threshold": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1,
-          "description": "Maximum allowed runtime risk score"
+          "description": "Maximum tolerated drift between decision-time and execution-time state (0.0–1.0). Drift exceeding this may trigger revalidation or block execution."
         },
         "evidence_freshness_window": {
           "type": "string",
-          "description": "Maximum allowed age of supporting evidence before revalidation is required"
+          "description": "Maximum allowed age of supporting evidence before revalidation is required (ISO 8601 duration, e.g., 'P30D', 'PT6H')"
         },
         "block_on_policy_mismatch": {
           "type": "boolean",
-          "description": "Whether execution must be blocked when current policy differs from decision-time policy"
+          "description": "Whether execution must block if current organizational policy differs from decision-time policy"
         },
         "fail_behavior": {
           "type": "string",
           "enum": ["block", "degrade", "warn", "fallback"],
-          "description": "System behavior when execution control checks fail"
+          "description": "Default response when execution control checks fail: block (prevent execution), degrade (reduced capability), warn (log and proceed), fallback (safe alternative)"
         },
         "allowed_actions": {
           "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Actions explicitly allowed under the current execution policy"
+          "items": {"type": "string"},
+          "description": "Actions explicitly permitted during execution (allowlist). Empty or omitted means all actions allowed."
         },
         "prohibited_actions": {
           "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Actions explicitly prohibited under the current execution policy"
+          "items": {"type": "string"},
+          "description": "Actions explicitly forbidden during execution (blocklist). Used to prevent high-risk operations."
         },
         "audit_log_required": {
           "type": "boolean",
-          "description": "Whether execution decisions and outcomes must be logged"
+          "description": "Whether all execution decisions and outcomes must be logged immutably"
         }
-      }
+      },
+      "required": ["requires_revalidation", "audit_log_required"]
     },
     "revalidation": {
       "type": "object",
-      "description": "Rules governing execution-time revalidation against live conditions",
+      "description": "Revalidation rules applied at runtime against live conditions. If revalidation is enabled (requires_revalidation: true), these rules specify what to check and how to respond to mismatches.",
       "properties": {
         "compare_context": {
           "type": "boolean",
-          "description": "Revalidate current context against decision-time context"
+          "description": "Revalidate current execution context against decision-time context"
         },
         "compare_policy": {
           "type": "boolean",
-          "description": "Revalidate current policy constraints against decision-time policy"
+          "description": "Revalidate current organizational policy against decision-time policy"
         },
         "compare_inputs": {
           "type": "boolean",
-          "description": "Revalidate current inputs against decision-time inputs"
+          "description": "Revalidate current inputs for validity, type, and range against decision-time inputs"
         },
         "compare_risk_posture": {
           "type": "boolean",
-          "description": "Revalidate current risk posture against decision-time risk posture"
+          "description": "Revalidate current runtime risk posture against acceptable thresholds"
         },
         "compare_evidence": {
           "type": "boolean",
-          "description": "Revalidate supporting evidence for freshness and continued validity"
+          "description": "Revalidate supporting evidence for freshness and continued correctness"
         },
         "on_mismatch": {
           "type": "string",
           "enum": ["block", "escalate", "fallback", "warn"],
-          "description": "Behavior when revalidation detects a mismatch"
+          "description": "Response when revalidation detects a mismatch. Overrides execution_control.fail_behavior for revalidation-specific mismatches."
         }
       }
     },
     "risk_posture": {
       "type": "object",
-      "description": "Runtime risk profile used to determine whether execution remains acceptable",
+      "description": "Runtime risk assessment applied at execution time. Risk posture captures current conditions that affect execution safety and tolerance.",
       "properties": {
         "impact": {
           "type": "string",
           "enum": ["low", "medium", "high", "critical"],
-          "description": "Potential severity if execution fails or produces harm"
+          "description": "Potential severity if execution fails or causes harm"
         },
         "likelihood": {
           "type": "number",
           "minimum": 0,
           "maximum": 1,
-          "description": "Estimated probability of a negative outcome"
+          "description": "Estimated probability of failure or negative outcome (0.0–1.0)"
         },
         "uncertainty": {
           "type": "number",
           "minimum": 0,
           "maximum": 1,
-          "description": "Confidence penalty representing uncertainty in the estimate"
+          "description": "Confidence penalty for unknowns; higher values indicate greater uncertainty in the risk estimate"
         },
         "system_state": {
           "type": "string",
           "enum": ["sandbox", "testing", "staging", "production", "restricted"],
-          "description": "Current system environment in which execution is occurring"
+          "description": "Current system environment: production carries highest risk, sandbox lowest"
         },
         "exposure_window": {
           "type": "string",
           "enum": ["transient", "session", "persistent"],
-          "description": "How long the effect of the action may persist"
+          "description": "Duration the action's effects may persist: transient (seconds to minutes), session (user session), persistent (indefinite)"
         },
         "max_allowed_score": {
           "type": "number",
           "minimum": 0,
           "maximum": 1,
-          "description": "Maximum allowed risk score for execution to proceed"
+          "description": "Risk score ceiling (0.0–1.0); execution blocks or escalates if runtime assessment exceeds this threshold"
         }
       }
     },
     "state": {
       "type": "object",
+      "description": "State machine and lifecycle management for Knowledge Block execution",
       "properties": {
         "initial_state": {
-          "type": "string"
+          "type": "string",
+          "description": "Starting state for this Knowledge Block's execution"
         },
         "state_machine": {
           "type": "array",
+          "description": "State machine definition with transitions and allowed actions per state",
           "items": {
             "type": "object",
             "properties": {
               "state": {
-                "type": "string"
+                "type": "string",
+                "description": "State name"
               },
               "transitions": {
-                "type": "array"
+                "type": "array",
+                "description": "Allowed transitions from this state",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "target": {
+                      "type": "string",
+                      "description": "Destination state"
+                    },
+                    "condition": {
+                      "type": "string",
+                      "description": "Condition triggering this transition"
+                    }
+                  }
+                }
               },
               "actions": {
-                "type": "array"
+                "type": "array",
+                "description": "Actions permitted in this state",
+                "items": {"type": "string"}
               }
             }
           }
@@ -191,28 +210,66 @@
     },
     "context": {
       "type": "object",
+      "description": "Runtime context: variables, inputs, and outputs",
       "properties": {
         "variables": {
-          "type": "object"
+          "type": "object",
+          "description": "Key-value pairs for runtime variables"
         },
         "inputs": {
-          "type": "array"
+          "type": "array",
+          "description": "Expected input parameters",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "type": {"type": "string"},
+              "required": {"type": "boolean"}
+            }
+          }
         },
         "outputs": {
-          "type": "array"
+          "type": "array",
+          "description": "Expected output parameters",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "type": {"type": "string"}
+            }
+          }
         }
       }
     },
     "error_handling": {
       "type": "object",
+      "description": "Error handling and recovery strategies",
       "properties": {
         "error_handlers": {
-          "type": "array"
+          "type": "array",
+          "description": "Handlers for specific error conditions",
+          "items": {
+            "type": "object",
+            "properties": {
+              "error_type": {
+                "type": "string",
+                "description": "Type of error (e.g., 'timeout', 'authorization', 'validation')"
+              },
+              "action": {
+                "type": "string",
+                "enum": ["retry", "escalate", "fallback", "abort"],
+                "description": "Response action"
+              }
+            }
+          }
         },
         "fallback_actions": {
-          "type": "array"
+          "type": "array",
+          "description": "Safe alternatives to execute if primary execution fails",
+          "items": {"type": "string"}
         }
       }
     }
-  }
+  },
+  "required": ["execution_control", "risk_posture"]
 }
