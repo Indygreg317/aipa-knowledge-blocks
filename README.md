@@ -50,6 +50,8 @@ Runtime revalidation asks: "Is this still true right now?" It treats runtime as 
 
 ### How the Framework Fits Together
 
+At a high level, the system separates what a decision is from whether it is allowed to execute.
+
 | Component | Purpose | Lifecycle |
 |-----------|---------|-----------|
 | **Structured Knowledge** | Encode decision criteria, dependencies, constraints | Authors draft Knowledge Blocks, experts review, governance approves |
