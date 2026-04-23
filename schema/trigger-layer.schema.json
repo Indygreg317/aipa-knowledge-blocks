@@ -1,1 +1,37 @@
-
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://industry-knowledge-blocks.org/schema/trigger-layer.schema.json",
+  "title": "Trigger Layer Schema",
+  "description": "Conditions and events that determine when a Knowledge Block should be evaluated or executed.",
+  "type": "object",
+  "properties": {
+    "trigger_type": {
+      "type": "string",
+      "enum": ["manual", "event", "schedule", "state_change"],
+      "description": "Primary trigger mechanism."
+    },
+    "trigger_source": {
+      "type": "string",
+      "description": "System, process, or actor that initiates the trigger."
+    },
+    "trigger_conditions": {
+      "type": "array",
+      "description": "Conditions that must be true before the block is evaluated.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preconditions": {
+      "type": "array",
+      "description": "Conditions expected to hold before execution can proceed.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "Priority of this trigger context."
+    }
+  }
+}
