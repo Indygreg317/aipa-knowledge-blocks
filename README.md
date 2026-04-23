@@ -27,6 +27,14 @@ Between decision and execution, conditions change:
 
 Without runtime control, previously valid decisions can become unsafe.
 
+## Example
+
+See a complete execution control scenario:
+
+- [Blocked Execution Example](examples/execution-control/blocked-execution.md)
+
+This example demonstrates how a valid decision at approval time can be blocked at runtime due to policy changes, risk escalation, and context drift.
+
 **Structured knowledge alone is not enough.** A Knowledge Block without execution control is a historical artifact—valid when authored, potentially dangerous when executed.
 
 Execution control solves this by:
