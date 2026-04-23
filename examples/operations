@@ -1,1 +1,66 @@
+# Operations Example
 
+## Scenario
+
+A Knowledge Block is used to authorize a production schedule adjustment in response to demand changes.
+
+---
+
+## Decision-Time State
+
+- Production line: Line 2
+- Capacity available: Yes
+- Maintenance conflict: No
+- Supervisor authority: Valid
+- Risk posture: Low
+
+---
+
+## Execution-Time State
+
+At runtime, the system checks:
+
+- Capacity still available: No
+- Maintenance conflict introduced: Yes
+- Supervisor authority still valid: Yes
+- Risk posture within threshold: No
+
+---
+
+## Revalidation
+
+Execution control performs runtime checks:
+
+- Context comparison: FAILED
+- Policy comparison: PASSED
+- Risk posture: EXCEEDS threshold
+
+---
+
+## Decision
+
+Execution is **BLOCKED**
+
+---
+
+## Fail Behavior
+
+- Block schedule change
+- Escalate to operations review
+- Record audit event
+
+---
+
+## Outcome
+
+- Schedule change prevented
+- Existing maintenance window preserved
+- Review required before retry
+
+---
+
+## Key Insight
+
+Operational decisions can become invalid between approval and execution.
+
+The Knowledge Block remained the decision artifact, and execution control prevented an unsafe change from being applied.
