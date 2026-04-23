@@ -70,6 +70,9 @@ At execution time:
 See [docs/execution-control.md](docs/execution-control.md) for the complete framework and [schema/runtime-layer.schema.json](schema/runtime-layer.schema.json) for the formal specification.
 
 ---
+Decision Lifecycle
+
+Author → Review → Approve → Execute → Revalidate → Allow / Block → Audit
 
 ## Repository Structure
 
