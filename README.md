@@ -8,6 +8,14 @@ Deterministic execution control for structured decisions.
 
 **industry-knowledge-blocks** is a deterministic framework for representing, validating, governing, and safely executing domain expertise, policy decisions, and operational knowledge in production systems.
 
+## Support
+
+If you’d like to support the development of AIPA:
+
+👉 [Venmo @Mindfull2](https://venmo.com/Mindfull2)
+
+If you choose to support, you may include your email in the note if you'd like to be informed about future updates and early access opportunities.
+
 
 This framework combines:
 
