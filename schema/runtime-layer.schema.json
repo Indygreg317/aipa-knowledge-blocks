@@ -46,11 +46,9 @@
           "description": "Whether Knowledge Block decision must be revalidated against current conditions before execution is permitted"
         },
         "required_authority": {
-          "oneOf": [
-            {"type": "string"},
-            {"type": "array", "items": {"type": "string"}}
-          ],
-          "description": "Required authority entity or entities (e.g., 'admin', 'compliance-officer', or ['approval-team-1', 'approval-team-2']). Used with authority_mode."
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Required authority entities that must approve or validate execution (e.g., ['admin', 'compliance-officer']). Used with authority_mode."
         },
         "authority_mode": {
           "type": "string",
@@ -63,6 +61,11 @@
           "maximum": 1,
           "description": "Maximum tolerated drift between decision-time and execution-time state (0.0–1.0). Drift exceeding this may trigger revalidation or block execution."
         },
+        "delta_mode": {
+          "type": "string",
+          "enum": ["strict", "tolerant"],
+          "description": "Defines how aggressively state drift is interpreted relative to delta_threshold. 'strict' treats drift more seriously; 'tolerant' is more lenient."
+        },
         "evidence_freshness_window": {
           "type": "string",
           "description": "Maximum allowed age of supporting evidence before revalidation is required (ISO 8601 duration, e.g., 'P30D', 'PT6H')"
@@ -73,13 +76,13 @@
         },
         "fail_behavior": {
           "type": "string",
-          "enum": ["block", "degrade", "warn", "fallback"],
-          "description": "Default response when execution control checks fail: block (prevent execution), degrade (reduced capability), warn (log and proceed), fallback (safe alternative)"
+          "enum": ["block", "degrade", "warn", "fallback", "escalate"],
+          "description": "Default response when execution control checks fail: block (prevent execution), degrade (reduced capability), warn (log and proceed), fallback (safe alternative), escalate (request human review)"
         },
         "allowed_actions": {
           "type": "array",
           "items": {"type": "string"},
-          "description": "Actions explicitly permitted during execution (allowlist). Empty or omitted means all actions allowed."
+          "description": "Actions explicitly permitted during execution (allowlist). If omitted, no explicit allowlist is enforced."
         },
         "prohibited_actions": {
           "type": "array",
@@ -119,10 +122,11 @@
         },
         "on_mismatch": {
           "type": "string",
-          "enum": ["block", "escalate", "fallback", "warn"],
-          "description": "Response when revalidation detects a mismatch. Overrides execution_control.fail_behavior for revalidation-specific mismatches."
+          "enum": ["block", "degrade", "warn", "fallback", "escalate"],
+          "description": "Response when revalidation detects a mismatch. Overrides execution_control.fail_behavior for revalidation-specific mismatches. block (prevent), degrade (reduced capability), warn (log and proceed), fallback (safe alternative), escalate (human review)."
         }
-      }
+      },
+      "required": ["on_mismatch"]
     },
     "risk_posture": {
       "type": "object",
