@@ -12,7 +12,7 @@ Deterministic execution control for structured decisions.
 
 If you’d like to support the development of AIPA:
 
-👉 [Venmo @Mindfull2](https://venmo.com/Mindfull2)
+👉 [Support via Venmo](https://venmo.com/Mindfull2)
 
 If you choose to support, you may include your email in the note if you'd like to be informed about future updates and early access opportunities.
 
