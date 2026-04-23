@@ -1,1 +1,60 @@
-
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://industry-knowledge-blocks.org/schema/index-layer.schema.json",
+  "title": "Index Layer Schema",
+  "description": "Metadata, identity, classification, and discovery fields for a Knowledge Block.",
+  "type": "object",
+  "required": ["knowledge_block_id", "title", "version"],
+  "properties": {
+    "knowledge_block_id": {
+      "type": "string",
+      "description": "Unique identifier for the Knowledge Block."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title of the Knowledge Block."
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the block's purpose."
+    },
+    "version": {
+      "type": "string",
+      "description": "Version string for the Knowledge Block."
+    },
+    "domain": {
+      "type": "string",
+      "description": "Domain or business area this block belongs to."
+    },
+    "category": {
+      "type": "string",
+      "description": "Category used for grouping related blocks."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Search and discovery tags.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner": {
+      "type": "string",
+      "description": "Owning person, team, or function."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "active", "deprecated", "archived"],
+      "description": "Lifecycle status of the Knowledge Block."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last updated timestamp."
+    }
+  }
+}
