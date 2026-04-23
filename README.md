@@ -33,7 +33,8 @@ Execution control in practice:
 
 - [Blocked Execution Example](examples/execution-control/blocked-execution.md)
 - [Allowed Execution Example](examples/execution-control/allowed-execution.md)
-
+- [Blocked Execution (JSON)](examples/execution-control/blocked-execution.json)
+  
 These examples demonstrate how decisions are validated at runtime and either allowed or prevented based on current conditions.
 **Structured knowledge alone is not enough.** A Knowledge Block without execution control is a historical artifact—valid when authored, potentially dangerous when executed.
 
