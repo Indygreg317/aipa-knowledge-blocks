@@ -1,1 +1,61 @@
+# Carbon Management Example
 
+## Scenario
+
+A Knowledge Block is used to validate a carbon reporting submission before it is accepted into an internal reporting system.
+
+---
+
+## Decision-Time State
+
+- Reporting period: Q2 2026
+- Facility scope: Plant A
+- Required fields present: Yes
+- Emissions methodology: Approved
+- Reviewer authority: Sustainability Lead
+- Risk posture: Low
+
+---
+
+## Execution-Time State
+
+At runtime, the system checks:
+
+- Reporting period still open: Yes
+- Methodology version still approved: Yes
+- Reviewer authority still valid: Yes
+- Submission completeness unchanged: Yes
+- Risk posture within threshold: Yes
+
+---
+
+## Revalidation
+
+Execution control performs runtime checks:
+
+- Context comparison: PASSED
+- Policy comparison: PASSED
+- Evidence comparison: PASSED
+- Risk posture: WITHIN threshold
+
+---
+
+## Decision
+
+Execution is **ALLOWED**
+
+---
+
+## Outcome
+
+- Submission accepted
+- Audit event recorded
+- Carbon reporting workflow continues
+
+---
+
+## Key Insight
+
+The Knowledge Block did not only describe carbon reporting requirements.
+
+It also ensured the submission remained valid at execution time under current policy, evidence, and authority conditions.
