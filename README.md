@@ -4,22 +4,24 @@
 
 **industry-knowledge-blocks** is a deterministic framework for representing, validating, governing, and safely executing domain expertise, policy decisions, and operational knowledge in production systems.
 
-Unlike generic documentation or reusable templates, this framework combines:
 
-1. **Structured Knowledge**: Layered schemas that encode decision criteria, context, and constraints
-2. **Execution Control**: Runtime revalidation, risk gating, and authority enforcement that ensures decisions remain valid and safe at execution time
-3. **Governance**: Trust classification, verification workflows, and audit trails that provide accountability and traceability
-4. **Layered Architecture**: Separation of metadata (index), activation (trigger), and runtime control (execution) layers
+This framework combines:
+
+- Structured Knowledge: Encodes decision criteria, context, and constraints
+- Execution Control: Revalidates decisions at runtime and enforces risk and authority constraints
+- Governance: Provides trust classification, verification workflows, and auditability
 
 ### Why Execution Control Matters
 
-Knowledge is static. Execution is dynamic. Between the moment a decision is made and the moment it runs, conditions change:
+Knowledge is static. Execution is dynamic.
 
-- System state may diverge from assumptions
-- Policies and regulations may shift
-- Risk conditions may escalate
-- Authority or permissions may be revoked
-- Environmental conditions may invalidate premises
+Between decision and execution, conditions change:
+- system state diverges
+- policies shift
+- risk increases
+- authority is revoked
+
+Without runtime control, previously valid decisions can become unsafe.
 
 **Structured knowledge alone is not enough.** A Knowledge Block without execution control is a historical artifact—valid when authored, potentially dangerous when executed.
 
