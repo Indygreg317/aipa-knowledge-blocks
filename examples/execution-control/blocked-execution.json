@@ -1,0 +1,53 @@
+{
+  "knowledge_block_id": "KB-DEPLOY-001",
+  "action": "deploy_configuration_update",
+  "environment": "production",
+
+  "decision_time_state": {
+    "system_state": "stable",
+    "risk_posture": "low",
+    "policy": "deployments_allowed",
+    "authority": "devops_engineer"
+  },
+
+  "execution_time_state": {
+    "system_state": "incident_active",
+    "risk_posture": "high",
+    "policy": "deployments_blocked",
+    "authority": "devops_engineer"
+  },
+
+  "execution_control": {
+    "requires_revalidation": true,
+    "delta_threshold": 0.2,
+    "delta_mode": "strict",
+    "fail_behavior": "block"
+  },
+
+  "revalidation": {
+    "compare_context": true,
+    "compare_policy": true,
+    "compare_risk_posture": true,
+    "on_mismatch": "block"
+  },
+
+  "evaluation_result": {
+    "context_match": false,
+    "policy_match": false,
+    "risk_within_threshold": false
+  },
+
+  "decision": "BLOCKED",
+
+  "reason": [
+    "policy_mismatch",
+    "risk_threshold_exceeded",
+    "context_drift"
+  ],
+
+  "audit": {
+    "timestamp": "2026-XX-XX",
+    "reviewer": "system",
+    "logged": true
+  }
+}
