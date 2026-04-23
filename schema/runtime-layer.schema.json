@@ -1,0 +1,218 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://industry-knowledge-blocks.org/schema/runtime-layer.schema.json",
+  "title": "Runtime Layer Schema",
+  "description": "Manages execution, state, runtime behavior, and execution-time control of knowledge blocks",
+  "type": "object",
+  "properties": {
+    "execution": {
+      "type": "object",
+      "properties": {
+        "engine": {
+          "type": "string",
+          "description": "Execution engine or orchestration system used at runtime"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Maximum execution time in seconds"
+        },
+        "retries": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of retry attempts allowed"
+        },
+        "parallel_execution": {
+          "type": "boolean",
+          "description": "Whether execution may run in parallel"
+        },
+        "execution_window": {
+          "type": "string",
+          "description": "Allowed time window for execution or re-execution"
+        },
+        "human_review_required": {
+          "type": "boolean",
+          "description": "Whether human review is required before execution"
+        }
+      }
+    },
+    "execution_control": {
+      "type": "object",
+      "description": "Deterministic controls applied at execution time before an action is allowed",
+      "properties": {
+        "requires_revalidation": {
+          "type": "boolean",
+          "description": "Whether decision state must be revalidated before execution"
+        },
+        "authority_mode": {
+          "type": "string",
+          "enum": ["strict", "conditional", "advisory"],
+          "description": "How strictly authority checks are enforced at runtime"
+        },
+        "delta_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Maximum tolerated drift between decision-time state and execution-time state"
+        },
+        "risk_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Maximum allowed runtime risk score"
+        },
+        "evidence_freshness_window": {
+          "type": "string",
+          "description": "Maximum allowed age of supporting evidence before revalidation is required"
+        },
+        "block_on_policy_mismatch": {
+          "type": "boolean",
+          "description": "Whether execution must be blocked when current policy differs from decision-time policy"
+        },
+        "fail_behavior": {
+          "type": "string",
+          "enum": ["block", "degrade", "warn", "fallback"],
+          "description": "System behavior when execution control checks fail"
+        },
+        "allowed_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Actions explicitly allowed under the current execution policy"
+        },
+        "prohibited_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Actions explicitly prohibited under the current execution policy"
+        },
+        "audit_log_required": {
+          "type": "boolean",
+          "description": "Whether execution decisions and outcomes must be logged"
+        }
+      }
+    },
+    "revalidation": {
+      "type": "object",
+      "description": "Rules governing execution-time revalidation against live conditions",
+      "properties": {
+        "compare_context": {
+          "type": "boolean",
+          "description": "Revalidate current context against decision-time context"
+        },
+        "compare_policy": {
+          "type": "boolean",
+          "description": "Revalidate current policy constraints against decision-time policy"
+        },
+        "compare_inputs": {
+          "type": "boolean",
+          "description": "Revalidate current inputs against decision-time inputs"
+        },
+        "compare_risk_posture": {
+          "type": "boolean",
+          "description": "Revalidate current risk posture against decision-time risk posture"
+        },
+        "compare_evidence": {
+          "type": "boolean",
+          "description": "Revalidate supporting evidence for freshness and continued validity"
+        },
+        "on_mismatch": {
+          "type": "string",
+          "enum": ["block", "escalate", "fallback", "warn"],
+          "description": "Behavior when revalidation detects a mismatch"
+        }
+      }
+    },
+    "risk_posture": {
+      "type": "object",
+      "description": "Runtime risk profile used to determine whether execution remains acceptable",
+      "properties": {
+        "impact": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "description": "Potential severity if execution fails or produces harm"
+        },
+        "likelihood": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Estimated probability of a negative outcome"
+        },
+        "uncertainty": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Confidence penalty representing uncertainty in the estimate"
+        },
+        "system_state": {
+          "type": "string",
+          "enum": ["sandbox", "testing", "staging", "production", "restricted"],
+          "description": "Current system environment in which execution is occurring"
+        },
+        "exposure_window": {
+          "type": "string",
+          "enum": ["transient", "session", "persistent"],
+          "description": "How long the effect of the action may persist"
+        },
+        "max_allowed_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Maximum allowed risk score for execution to proceed"
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "initial_state": {
+          "type": "string"
+        },
+        "state_machine": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "type": "string"
+              },
+              "transitions": {
+                "type": "array"
+              },
+              "actions": {
+                "type": "array"
+              }
+            }
+          }
+        }
+      }
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "variables": {
+          "type": "object"
+        },
+        "inputs": {
+          "type": "array"
+        },
+        "outputs": {
+          "type": "array"
+        }
+      }
+    },
+    "error_handling": {
+      "type": "object",
+      "properties": {
+        "error_handlers": {
+          "type": "array"
+        },
+        "fallback_actions": {
+          "type": "array"
+        }
+      }
+    }
+  }
+}
