@@ -1,6 +1,6 @@
 # industry-knowledge-blocks - AIPA - AI Partnership Association
 
-## A Structured Knowledge and Execution Control Framework
+## A deterministic framework for representing decisions and enforcing their safe execution at runtime.
 
 **industry-knowledge-blocks** is a deterministic framework for representing, validating, governing, and safely executing domain expertise, policy decisions, and operational knowledge in production systems.
 
