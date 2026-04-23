@@ -11,6 +11,10 @@ This framework combines:
 - Execution Control: Revalidates decisions at runtime and enforces risk and authority constraints
 - Governance: Provides trust classification, verification workflows, and auditability
 
+  
+Knowledge Blocks define decisions.
+Execution control determines whether those decisions are still allowed to run.
+
 ### Why Execution Control Matters
 
 Knowledge is static. Execution is dynamic.
