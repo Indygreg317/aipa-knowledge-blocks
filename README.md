@@ -1,4 +1,4 @@
-# industry-knowledge-blocks
+# industry-knowledge-blocks - AIPA - AI Partnership Association
 
 ## A Structured Knowledge and Execution Control Framework
 
