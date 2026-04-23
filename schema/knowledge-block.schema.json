@@ -1,1 +1,59 @@
-
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://industry-knowledge-blocks.org/schema/knowledge-block.schema.json",
+  "title": "Knowledge Block Schema",
+  "description": "Core schema for a Knowledge Block, combining structured decision metadata, trigger context, and runtime execution control.",
+  "type": "object",
+  "required": ["index", "execution_control", "risk_posture"],
+  "properties": {
+    "index": {
+      "$ref": "index-layer.schema.json"
+    },
+    "trigger": {
+      "$ref": "trigger-layer.schema.json"
+    },
+    "execution": {
+      "type": "object",
+      "description": "Basic execution settings for the block."
+    },
+    "execution_control": {
+      "$ref": "runtime-layer.schema.json#/properties/execution_control"
+    },
+    "revalidation": {
+      "$ref": "runtime-layer.schema.json#/properties/revalidation"
+    },
+    "risk_posture": {
+      "$ref": "runtime-layer.schema.json#/properties/risk_posture"
+    },
+    "state": {
+      "$ref": "runtime-layer.schema.json#/properties/state"
+    },
+    "context": {
+      "$ref": "runtime-layer.schema.json#/properties/context"
+    },
+    "error_handling": {
+      "$ref": "runtime-layer.schema.json#/properties/error_handling"
+    },
+    "logic": {
+      "type": "array",
+      "description": "Decision logic, rules, or structured reasoning statements.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Evidence or references used to support the block.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outcomes": {
+      "type": "array",
+      "description": "Expected outcomes or allowed result states.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
