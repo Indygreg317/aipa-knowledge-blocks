@@ -1,1 +1,80 @@
-
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://industry-knowledge-blocks.org/schema/full-layer.schema.json",
+  "title": "Full Layer Schema",
+  "description": "Integrated schema for a fully specified Knowledge Block, including index, trigger, runtime control, evidence, logic, and outcomes.",
+  "type": "object",
+  "required": [
+    "index",
+    "trigger",
+    "execution_control",
+    "revalidation",
+    "risk_posture",
+    "context"
+  ],
+  "properties": {
+    "index": {
+      "$ref": "index-layer.schema.json"
+    },
+    "trigger": {
+      "$ref": "trigger-layer.schema.json"
+    },
+    "execution": {
+      "$ref": "runtime-layer.schema.json#/properties/execution"
+    },
+    "execution_control": {
+      "$ref": "runtime-layer.schema.json#/properties/execution_control"
+    },
+    "revalidation": {
+      "$ref": "runtime-layer.schema.json#/properties/revalidation"
+    },
+    "risk_posture": {
+      "$ref": "runtime-layer.schema.json#/properties/risk_posture"
+    },
+    "state": {
+      "$ref": "runtime-layer.schema.json#/properties/state"
+    },
+    "context": {
+      "$ref": "runtime-layer.schema.json#/properties/context"
+    },
+    "error_handling": {
+      "$ref": "runtime-layer.schema.json#/properties/error_handling"
+    },
+    "logic": {
+      "type": "array",
+      "description": "Rules, criteria, or structured decision logic.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Supporting evidence, source links, or internal references.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outcomes": {
+      "type": "array",
+      "description": "Expected outputs, actions, or result conditions.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "audit": {
+      "type": "object",
+      "description": "Audit and traceability metadata.",
+      "properties": {
+        "audit_required": {
+          "type": "boolean"
+        },
+        "audit_owner": {
+          "type": "string"
+        },
+        "retention_policy": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
