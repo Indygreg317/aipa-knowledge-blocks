@@ -1,1 +1,97 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Indygreg317/aipa-knowledge-blocks/schema/runtime-layer.schema.json",
+  "title": "AIPA Knowledge Block Runtime Layer",
+  "description": "Defines the executable or operational behavior of a Knowledge Block once activated by trigger conditions.",
+  "type": "object",
+  "required": [
+    "runtime_id",
+    "execution_mode",
+    "goal",
+    "steps",
+    "fallback_behavior",
+    "human_review_required"
+  ],
+  "properties": {
+    "runtime_id": {
+      "type": "string",
+      "description": "Unique identifier for the runtime layer."
+    },
+    "execution_mode": {
+      "type": "string",
+      "enum": [
+        "advisory",
+        "assistive",
+        "semi_automated",
+        "automated",
+        "human_review_required"
+      ],
+      "description": "Defines how the runtime logic should be used or executed."
+    },
+    "goal": {
+      "type": "string",
+      "description": "The operational goal of this Knowledge Block when activated."
+    },
+    "steps": {
+      "type": "array",
+      "description": "Ordered runtime actions, reasoning steps, or operational instructions.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tool_permissions": {
+      "type": "array",
+      "description": "Optional list of tools, APIs, or system capabilities this block may access.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inputs_required": {
+      "type": "array",
+      "description": "Inputs required before runtime execution can proceed.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "outputs_expected": {
+      "type": "array",
+      "description": "Expected outputs produced by the runtime layer.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fallback_behavior": {
+      "type": "string",
+      "description": "What the system should do if the runtime process fails, lacks context, or produces low confidence output."
+    },
+    "timeout_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Optional maximum execution time in seconds."
+    },
+    "max_calls": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Optional maximum number of external calls or tool invocations allowed."
+    },
+    "human_review_required": {
+      "type": "boolean",
+      "description": "Indicates whether human review is required before this runtime output can be used."
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "description": "Risk level associated with executing this runtime layer."
+    },
+    "audit_log_required": {
+      "type": "boolean",
+      "description": "Indicates whether runtime activity should be logged for traceability."
+    }
+  },
+  "additionalProperties": false
+}
