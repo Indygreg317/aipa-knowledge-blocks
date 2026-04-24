@@ -1,1 +1,53 @@
 
+{
+  "index": {
+    "knowledge_block_id": "KB-EXAMPLE-001",
+    "title": "Blank Knowledge Block",
+    "description": "Starter template for a structured decision block.",
+    "version": "0.1.0",
+    "domain": "general",
+    "category": "decision-control",
+    "tags": [],
+    "owner": "",
+    "status": "draft"
+  },
+  "trigger": {
+    "trigger_type": "manual",
+    "trigger_source": "",
+    "trigger_conditions": [],
+    "preconditions": [],
+    "priority": "medium"
+  },
+  "execution_control": {
+    "requires_revalidation": true,
+    "required_authority": [],
+    "authority_mode": "strict",
+    "delta_threshold": 0.2,
+    "delta_mode": "strict",
+    "evidence_freshness_window": "P30D",
+    "block_on_policy_mismatch": true,
+    "fail_behavior": "block",
+    "allowed_actions": [],
+    "prohibited_actions": [],
+    "audit_log_required": true
+  },
+  "revalidation": {
+    "compare_context": true,
+    "compare_policy": true,
+    "compare_inputs": true,
+    "compare_risk_posture": true,
+    "compare_evidence": true,
+    "on_mismatch": "block"
+  },
+  "risk_posture": {
+    "impact": "medium",
+    "likelihood": 0.2,
+    "uncertainty": 0.3,
+    "system_state": "testing",
+    "exposure_window": "session",
+    "max_allowed_score": 0.5
+  },
+  "logic": [],
+  "evidence": [],
+  "outcomes": []
+}
