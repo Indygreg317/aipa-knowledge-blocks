@@ -1,1 +1,56 @@
-
+{
+  "index": {
+    "knowledge_block_id": "KB-COMPLIANCE-001",
+    "title": "Compliance Decision Block",
+    "description": "Template for policy, audit, and regulatory decision control.",
+    "version": "0.1.0",
+    "domain": "compliance",
+    "category": "policy-enforcement",
+    "tags": ["compliance", "audit", "policy", "governance"],
+    "owner": "compliance-team",
+    "status": "draft"
+  },
+  "trigger": {
+    "trigger_type": "event",
+    "trigger_source": "compliance-workflow",
+    "trigger_conditions": ["policy_check_requested"],
+    "preconditions": ["evidence_available", "policy_version_current"],
+    "priority": "high"
+  },
+  "execution_control": {
+    "requires_revalidation": true,
+    "required_authority": ["compliance-officer"],
+    "authority_mode": "strict",
+    "delta_threshold": 0.1,
+    "delta_mode": "strict",
+    "evidence_freshness_window": "P30D",
+    "block_on_policy_mismatch": true,
+    "fail_behavior": "block",
+    "allowed_actions": ["review", "approve", "escalate"],
+    "prohibited_actions": ["override_policy", "delete_audit_record"],
+    "audit_log_required": true
+  },
+  "revalidation": {
+    "compare_context": true,
+    "compare_policy": true,
+    "compare_inputs": true,
+    "compare_risk_posture": true,
+    "compare_evidence": true,
+    "on_mismatch": "escalate"
+  },
+  "risk_posture": {
+    "impact": "high",
+    "likelihood": 0.2,
+    "uncertainty": 0.2,
+    "system_state": "production",
+    "exposure_window": "persistent",
+    "max_allowed_score": 0.35
+  },
+  "logic": [
+    "If required evidence is missing, block execution.",
+    "If policy version has changed, require revalidation.",
+    "If authority is invalid, escalate."
+  ],
+  "evidence": [],
+  "outcomes": ["ALLOW", "BLOCK", "ESCALATE"]
+}
