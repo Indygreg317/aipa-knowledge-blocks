@@ -1,4 +1,4 @@
-# AIPA
+# AIPA - AI Partnership Association
 
 ## Support
 
