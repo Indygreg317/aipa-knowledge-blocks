@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aipa.org/schema/signer-registry.schema.json",
+  "title": "Signer Registry Schema",
+  "description": "Authoritative map of signing keys to authorized models. Nano uses this to verify intent source authority before any governance evaluation.",
+  "type": "object",
+  "required": ["registry_version", "registry_id", "signers"],
+  "properties": {
+    "registry_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "registry_id": {
+      "type": "string"
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "signers": {
+      "type": "object",
+      "description": "Map of signing_key_id to signer policy",
+      "additionalProperties": {
+        "$ref": "#/definitions/SignerPolicy"
+      }
+    }
+  },
+  "definitions": {
+    "SignerPolicy": {
+      "type": "object",
+      "required": [
+        "signing_key_id",
+        "authorized_models",
+        "key_status",
+        "rotation_state",
+        "valid_from",
+        "valid_until",
+        "signature_algorithm",
+        "public_key_fingerprint"
+      ],
+      "properties": {
+        "signing_key_id": {
+          "type": "string",
+          "description": "Must match the key in the signers map"
+        },
+        "authorized_models": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "model_id values this key is permitted to sign for. A key may not sign for a model not in this list."
+        },
+        "key_status": {
+          "type": "string",
+          "enum": ["active", "suspended", "revoked"],
+          "description": "Operational status. suspended = temporarily inactive. revoked = permanently invalid; reject all signatures."
+        },
+        "rotation_state": {
+          "type": "string",
+          "enum": ["active", "rotating", "verification_only", "retired"],
+          "description": "active: normal use. rotating: new key is primary, this key still accepted during overlap window. verification_only: no new signatures accepted, existing in-flight intents may still be verified. retired: no verification accepted."
+        },
+        "rotation_overlap_window_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How long after rotation begins this key remains valid for verification. Required when rotation_state is rotating or verification_only."
+        },
+        "successor_key_id": {
+          "type": "string",
+          "description": "The key_id that replaces this key during rotation. Required when rotation_state is rotating."
+        },
+        "valid_from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid_until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "signature_algorithm": {
+          "type": "string",
+          "enum": ["Ed25519", "ES256", "RS256"],
+          "description": "Algorithm Nano must use to verify signatures from this key"
+        },
+        "public_key_fingerprint": {
+          "type": "string",
+          "description": "SHA-256 fingerprint of the public key. Used to detect key substitution attacks."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
