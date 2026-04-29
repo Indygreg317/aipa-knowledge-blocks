@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aipa.org/schema/audit-record.schema.json",
+  "title": "Audit Record Schema",
+  "description": "Minimum forensic audit record produced by Nano for accept, reject, queue, block, and escalation decisions.",
+  "type": "object",
+  "required": [
+    "audit_id",
+    "intent_id",
+    "decision",
+    "reason_code",
+    "evaluated_at",
+    "runtime_mode",
+    "intent_schema_version",
+    "action_registry_version",
+    "signer_registry_version",
+    "policy_hash"
+  ],
+  "properties": {
+    "audit_id": { "type": "string" },
+    "intent_id": { "type": "string" },
+    "decision": {
+      "type": "string",
+      "enum": ["accepted", "rejected", "escalated", "queued", "blocked"]
+    },
+    "reason_code": {
+      "type": "string",
+      "enum": [
+        "valid_intent",
+        "invalid_schema",
+        "unsupported_schema_version",
+        "invalid_signature",
+        "unauthorized_signer",
+        "expired_intent",
+        "registry_conflict",
+        "runtime_mode_not_allowed",
+        "safety_unavailable",
+        "zone_not_clear",
+        "human_review_required",
+        "degraded_mode_queue",
+        "degraded_mode_block",
+        "unknown_action_type"
+      ]
+    },
+    "evaluated_at": { "type": "string", "format": "date-time" },
+    "runtime_mode": {
+      "type": "string",
+      "enum": ["HARD_REALTIME", "SOFT_REALTIME", "ASYNC_REVIEW", "DEGRADED_MODE", "OBSERVATION_MODE"]
+    },
+    "intent_schema_version": { "type": "string" },
+    "action_registry_version": { "type": "string" },
+    "signer_registry_version": { "type": "string" },
+    "kb_version": { "type": "string" },
+    "signing_key_id": { "type": "string" },
+    "source_model_id": { "type": "string" },
+    "action_type": { "type": "string" },
+    "policy_hash": { "type": "string" },
+    "payload_hash": { "type": "string" },
+    "previous_audit_hash": { "type": ["string", "null"] },
+    "audit_hash": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}
