@@ -1,14 +1,32 @@
+<img width="1407" height="768" alt="aipa knowledge block repo image" src="https://github.com/user-attachments/assets/3c9a8ae5-57f5-4184-95d0-2a429e6f9df5" />
+
+
+
+
+
+
+
 # AIPA - AI Partnership Association
 
-## Support
+## Runtime Governance Upgrade
 
-If you’d like to support the development of AIPA:
+The repository now includes a governance-oriented runtime architecture designed to separate:
 
-👉 ## Support
+- AI inference
+- intent translation
+- governance enforcement
+- safety systems
+- audit logging
+- human oversight
 
-If you'd like to support the development of AIPA, Venmo: @Mindfull2
+Core additions include:
 
-If you choose to support, you may include your email in the note if you'd like to be informed about future updates and early access opportunities.
+- Intent Envelope Schema
+- Action Registry Schema
+- Signer Registry Schema
+- Audit Record Schema
+
+These artifacts formalize a bounded operational trust architecture for AI-assisted systems.
 
 
 
