@@ -1,1 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aipa.org/schema/action-registry.schema.json",
+  "title": "Action Registry Schema",
+  "description": "Defines allowed actions, governance constraints, and runtime routing rules. Registry always wins over payload requests.",
+  "type": "object",
+  "required": ["registry_version", "registry_id", "actions"],
+  "properties": {
+    "registry_version": {
+      "type": "string",
+      "description": "Semantic version of this registry artifact",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "registry_id": {
+      "type": "string",
+      "description": "Unique identifier for this registry instance"
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "effective_until": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "conflict_resolution": {
+      "type": "string",
+      "enum": ["registry_wins", "escalate", "block"],
+      "description": "What Nano does when payload intent conflicts with registry constraints. Default is registry_wins.",
+      "default": "registry_wins"
+    },
+    "degraded_mode_default": {
+      "type": "string",
+      "enum": ["queue", "reject", "block"],
+      "description": "Default behavior for all actions when system is in DEGRADED_MODE and action has no explicit degraded_mode_behavior"
+    },
+    "actions": {
+      "type": "object",
+      "description": "Map of action_type string to action policy",
+      "additionalProperties": {
+        "$ref": "#/definitions/ActionPolicy"
+      }
+    }
+  },
+  "definitions": {
+    "ActionPolicy": {
+      "type": "object",
+      "required": [
+        "action_type",
+        "autonomous_allowed",
+        "default_expiry_seconds",
+        "max_expiry_seconds",
+        "allowed_runtime_modes",
+        "registry_wins_over_payload",
+        "degraded_mode_behavior",
+        "audit_required"
+      ],
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "description": "Must match the key in the actions map"
+        },
+        "description": {
+          "type": "string"
+        },
+        "autonomous_allowed": {
+          "type": "boolean",
+          "description": "Whether this action can ever execute without human review. False means human review is mandatory regardless of payload."
+        },
+        "human_review_required_above_severity": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "description": "Severity threshold above which human review is forced, even if autonomous_allowed is true"
+        },
+        "requires_safety_layer": {
+          "type": "boolean",
+          "description": "If true and safety layer is unavailable, execution must block"
+        },
+        "requires_zone_clearance": {
+          "type": "boolean",
+          "description": "If true, personnel_nearby must be false before execution is permitted"
+        },
+        "default_expiry_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How long an intent for this action is valid if payload does not specify expiry"
+        },
+        "max_expiry_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Hard ceiling on expiry. Payload expires_at cannot exceed generated_at + max_expiry_seconds."
+        },
+        "allowed_runtime_modes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "HARD_REALTIME",
+              "SOFT_REALTIME",
+              "ASYNC_REVIEW",
+              "DEGRADED_MODE",
+              "OBSERVATION_MODE"
+            ]
+          },
+          "minItems": 1
+        },
+        "degraded_mode_behavior": {
+          "type": "string",
+          "enum": ["queue", "reject", "block"],
+          "description": "What Nano does with this action type when system is in DEGRADED_MODE"
+        },
+        "registry_wins_over_payload": {
+          "type": "boolean",
+          "enum": [true],
+          "description": "Must always be true. Payload is a request. Registry governs."
+        },
+        "audit_required": {
+          "type": "boolean",
+          "description": "Whether Nano must produce an audit log entry for this action type"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
 
