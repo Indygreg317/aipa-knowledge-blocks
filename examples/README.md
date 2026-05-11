@@ -1,6 +1,6 @@
 # Examples
 
-This directory contains practical examples for **AIPA Knowledge Blocks**.
+This directory contains practical examples and starter guides for **AIPA Knowledge Blocks**.
 
 The examples show how structured knowledge can be represented, invoked, revalidated, allowed, blocked, escalated, and audited.
 
@@ -19,30 +19,49 @@ They are intended to show:
 - how approval differs from execution authorization
 - how runtime revalidation can allow or block action
 - how audit records preserve traceability
+- how domain-specific starter areas can be expanded into practical playbooks
 
 Examples are not production-ready policies. They are reference artifacts for learning, testing, and adaptation.
 
 ---
 
-## Current Example Sets
+## Current Example Areas
 
-| Example Set | Purpose |
-|---|---|
-| [Execution Control](execution-control/) | Demonstrates allowed and blocked runtime execution decisions |
+| Example Area | Purpose | Status |
+|---|---|---|
+| [Execution Control](execution-control/) | Demonstrates allowed and blocked runtime execution decisions | Active examples |
+| [AI Governance](ai-governance/) | Starter guide for governed AI workflows, human oversight, policy-aware orchestration, and tool-use control | Starter guide |
+| [Compliance](compliance/) | Starter guide for compliance workflows, policy alignment, evidence review, and audit chains | Starter guide |
+| [Operations](operations/) | Starter guide for operational decisions, deployment controls, incident response, and escalation | Starter guide |
+| [Carbon and Sustainability](carbon/) | Starter guide for carbon reporting, sustainability workflows, methodology validation, and audit preparation | Starter guide |
 
 ---
 
-## Planned Example Sets
+## Current Execution-Control Examples
 
-Future example sets may include:
+Narrative examples:
 
-| Example Set | Purpose |
+- [Allowed Execution Narrative](execution-control/allowed-execution.md)
+- [Blocked Execution Narrative](execution-control/blocked-execution.md)
+
+Machine-readable examples:
+
+- [Allowed Execution JSON](execution-control/allowed-execution.json)
+- [Blocked Execution JSON](execution-control/blocked-execution.json)
+
+---
+
+## Future Example Opportunities
+
+Future additions may include:
+
+| Example Set | Possible Focus |
 |---|---|
-| Compliance | Regulatory review, evidence checks, approval chains, and audit workflows |
-| Operations | Deployment, scheduling, capacity, incident response, and escalation decisions |
-| Carbon and Sustainability | Emissions methods, reporting validation, supplier data review, and audit preparation |
-| AI Governance | Human oversight, high-risk action routing, policy exceptions, and tool-use controls |
-| Security | Access approval, privileged actions, containment workflows, and incident classification |
+| Compliance | Evidence sufficiency checks, policy exceptions, regulatory review workflows |
+| Operations | Maintenance windows, rollback decisions, incident escalation, capacity thresholds |
+| Carbon and Sustainability | Emissions methodology checks, supplier data review, sustainability claim validation |
+| AI Governance | Human review routing, high-risk action escalation, tool-use authorization |
+| Security | Access approval, privileged actions, containment workflows, incident classification |
 
 ---
 
@@ -56,6 +75,16 @@ Each example should clarify:
 4. What revalidation checks were performed
 5. Whether execution was allowed, blocked, deferred, degraded, escalated, or aborted
 6. What audit record should remain
+
+---
+
+## Relationship to Templates
+
+Templates help authors create new Knowledge Blocks.
+
+Examples show how a Knowledge Block behaves in a scenario.
+
+Use [`../templates/`](../templates/) when creating a new block. Use this directory when studying how blocks may be applied, tested, or explained.
 
 ---
 
