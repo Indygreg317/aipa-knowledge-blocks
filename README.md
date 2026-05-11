@@ -99,6 +99,7 @@ Common fail-safe behaviors include **BLOCK**, **DEFER**, **ESCALATE**, **DEGRADE
 aipa-knowledge-blocks/
 ├── README.md
 ├── LICENSE
+├── NOTICE.md
 ├── CONTRIBUTING.md
 │
 ├── docs/
@@ -121,6 +122,7 @@ aipa-knowledge-blocks/
 │   └── full-layer.schema.json
 │
 ├── templates/
+│   ├── README.md
 │   ├── blank-knowledge-block.json
 │   ├── carbon-template.json
 │   ├── compliance-template.json
@@ -149,6 +151,7 @@ aipa-knowledge-blocks/
 - [Field Definitions](docs/field-definitions.md) — core field meanings and runtime interpretation
 - [Industry Playbooks](docs/industry-playbooks.md) — domain-specific packaging guidance
 - [Controlled Vocabulary](docs/controlled-vocab.md) — terminology normalization
+- [Usage Notice](NOTICE.md) — practical usage boundaries and deployment responsibility
 
 ---
 
@@ -259,9 +262,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, review proce
 
 ---
 
-## License
+## License and Notice
 
 See [LICENSE](LICENSE) for license terms.
+
+See [NOTICE.md](NOTICE.md) for practical usage boundaries, deployment responsibility, and no-certification-claim language.
 
 ---
 
