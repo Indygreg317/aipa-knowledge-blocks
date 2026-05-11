@@ -127,10 +127,12 @@ aipa-knowledge-blocks/
 │   └── operations-template.json
 │
 └── examples/
+    ├── README.md
+    ├── ai-governance/
     ├── carbon/
     ├── compliance/
-    ├── operations/
-    └── execution-control/
+    ├── execution-control/
+    └── operations/
 ```
 
 ---
@@ -144,7 +146,34 @@ aipa-knowledge-blocks/
 - [Trust Levels](docs/trust-levels.md) — confidence classification and maturity states
 - [Verification Status](docs/verification-status.md) — verification lifecycle and evidence freshness
 - [Schema Reference](docs/schema.md) — schema structure and validation guidance
+- [Field Definitions](docs/field-definitions.md) — core field meanings and runtime interpretation
+- [Industry Playbooks](docs/industry-playbooks.md) — domain-specific packaging guidance
 - [Controlled Vocabulary](docs/controlled-vocab.md) — terminology normalization
+
+---
+
+## Examples
+
+The examples directory provides practical reference artifacts for learning and implementation planning.
+
+Current example areas:
+
+- [Examples Index](examples/README.md) — overview of example categories and usage boundaries
+- [Execution Control](examples/execution-control/) — allowed and blocked runtime execution examples
+- [AI Governance](examples/ai-governance/) — starter guide for governed AI workflow examples
+- [Compliance](examples/compliance/) — starter guide for compliance and audit workflow examples
+- [Operations](examples/operations/) — starter guide for deployment, incident, and operational control examples
+- [Carbon and Sustainability](examples/carbon/) — starter guide for sustainability and reporting workflow examples
+
+Current machine-readable execution examples:
+
+- [Allowed Execution JSON](examples/execution-control/allowed-execution.json)
+- [Blocked Execution JSON](examples/execution-control/blocked-execution.json)
+
+Current narrative execution examples:
+
+- [Allowed Execution Narrative](examples/execution-control/allowed-execution.md)
+- [Blocked Execution Narrative](examples/execution-control/blocked-execution.md)
 
 ---
 
