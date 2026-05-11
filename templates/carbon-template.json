@@ -1,33 +1,53 @@
 {
   "index": {
-    "knowledge_block_id": "KB-CARBON-001",
-    "title": "Carbon Reporting Validation Block",
-    "description": "Template for validating emissions reporting and sustainability submissions.",
+    "knowledge_block_id": "AIPA-KB-CARBON-001",
+    "title": "Carbon Reporting Knowledge Block Template",
+    "description": "Starter template for governed carbon reporting, sustainability submissions, emissions evidence, and methodology validation workflows.",
     "version": "0.1.0",
     "domain": "carbon",
     "category": "reporting-validation",
-    "tags": ["carbon", "sustainability", "emissions", "audit"],
+    "tags": [
+      "aipa",
+      "knowledge-block",
+      "carbon",
+      "sustainability",
+      "emissions",
+      "audit"
+    ],
     "owner": "sustainability-team",
     "status": "draft"
   },
   "trigger": {
     "trigger_type": "event",
     "trigger_source": "carbon-reporting-workflow",
-    "trigger_conditions": ["submission_received"],
-    "preconditions": ["reporting_period_open", "methodology_approved"],
+    "trigger_conditions": [
+      "submission_received"
+    ],
+    "preconditions": [
+      "reporting_period_open",
+      "methodology_approved"
+    ],
     "priority": "medium"
   },
   "execution_control": {
     "requires_revalidation": true,
-    "required_authority": ["sustainability-lead"],
+    "required_authority": [
+      "sustainability-lead"
+    ],
     "authority_mode": "conditional",
     "delta_threshold": 0.2,
     "delta_mode": "tolerant",
     "evidence_freshness_window": "P90D",
     "block_on_policy_mismatch": true,
     "fail_behavior": "fallback",
-    "allowed_actions": ["validate_submission", "request_review", "record_audit"],
-    "prohibited_actions": ["approve_without_evidence"],
+    "allowed_actions": [
+      "validate_submission",
+      "request_review",
+      "record_audit"
+    ],
+    "prohibited_actions": [
+      "approve_without_evidence"
+    ],
     "audit_log_required": true
   },
   "revalidation": {
@@ -52,5 +72,9 @@
     "If required emissions data is missing, request review."
   ],
   "evidence": [],
-  "outcomes": ["ALLOW", "BLOCK", "REQUEST_REVIEW"]
+  "outcomes": [
+    "ALLOW",
+    "BLOCK",
+    "REQUEST_REVIEW"
+  ]
 }
