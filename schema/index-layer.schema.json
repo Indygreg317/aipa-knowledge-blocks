@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://industry-knowledge-blocks.org/schema/index-layer.schema.json",
+  "$id": "https://aipa.network/schema/index-layer.schema.json",
   "title": "Index Layer Schema",
-  "description": "Metadata, identity, classification, and discovery fields for a Knowledge Block.",
+  "description": "Metadata, identity, classification, ownership, lifecycle, and discovery fields for an AIPA Knowledge Block.",
   "type": "object",
   "required": ["knowledge_block_id", "title", "version"],
   "properties": {
