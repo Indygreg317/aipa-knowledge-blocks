@@ -115,6 +115,7 @@ aipa-knowledge-blocks/
 │   └── controlled-vocab.md
 │
 ├── schema/
+│   ├── README.md
 │   ├── knowledge-block.schema.json
 │   ├── index-layer.schema.json
 │   ├── trigger-layer.schema.json
@@ -148,6 +149,7 @@ aipa-knowledge-blocks/
 - [Trust Levels](docs/trust-levels.md) — confidence classification and maturity states
 - [Verification Status](docs/verification-status.md) — verification lifecycle and evidence freshness
 - [Schema Reference](docs/schema.md) — schema structure and validation guidance
+- [Schema Directory Guide](schema/README.md) — schema files, canonical IDs, and validation boundary
 - [Field Definitions](docs/field-definitions.md) — core field meanings and runtime interpretation
 - [Industry Playbooks](docs/industry-playbooks.md) — domain-specific packaging guidance
 - [Controlled Vocabulary](docs/controlled-vocab.md) — terminology normalization
