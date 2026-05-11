@@ -1,13 +1,17 @@
-
 {
   "index": {
-    "knowledge_block_id": "KB-EXAMPLE-001",
-    "title": "Blank Knowledge Block",
-    "description": "Starter template for a structured decision block.",
+    "knowledge_block_id": "AIPA-KB-EXAMPLE-001",
+    "title": "Blank AIPA Knowledge Block",
+    "description": "Starter template for a governed Knowledge Block with identity, trigger, runtime control, logic, evidence, and outcome fields.",
     "version": "0.1.0",
     "domain": "general",
     "category": "decision-control",
-    "tags": [],
+    "tags": [
+      "aipa",
+      "knowledge-block",
+      "template",
+      "runtime-control"
+    ],
     "owner": "",
     "status": "draft"
   },
