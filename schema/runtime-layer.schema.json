@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://industry-knowledge-blocks.org/schema/runtime-layer.schema.json",
+  "$id": "https://aipa.network/schema/runtime-layer.schema.json",
   "title": "Runtime Layer Schema",
-  "description": "Execution control, revalidation, state management, and safe failure for Knowledge Blocks at runtime",
+  "description": "Execution control, revalidation, state management, context handling, risk posture, and safe failure for AIPA Knowledge Blocks at runtime",
   "type": "object",
   "properties": {
     "execution": {
@@ -39,7 +39,7 @@
     },
     "execution_control": {
       "type": "object",
-      "description": "Deterministic controls enforced at runtime before execution is allowed. These controls gate execution based on revalidation results, risk assessment, and policy consistency.",
+      "description": "Deterministic controls enforced at runtime before execution is allowed. These controls gate execution based on revalidation results, risk assessment, authority status, and policy consistency.",
       "properties": {
         "requires_revalidation": {
           "type": "boolean",
@@ -47,7 +47,9 @@
         },
         "required_authority": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "description": "Required authority entities that must approve or validate execution (e.g., ['admin', 'compliance-officer']). Used with authority_mode."
         },
         "authority_mode": {
@@ -81,12 +83,16 @@
         },
         "allowed_actions": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "description": "Actions explicitly permitted during execution (allowlist). If omitted, no explicit allowlist is enforced."
         },
         "prohibited_actions": {
           "type": "array",
-          "items": {"type": "string"},
+          "items": {
+            "type": "string"
+          },
           "description": "Actions explicitly forbidden during execution (blocklist). Used to prevent high-risk operations."
         },
         "audit_log_required": {
@@ -205,7 +211,9 @@
               "actions": {
                 "type": "array",
                 "description": "Actions permitted in this state",
-                "items": {"type": "string"}
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -226,9 +234,15 @@
           "items": {
             "type": "object",
             "properties": {
-              "name": {"type": "string"},
-              "type": {"type": "string"},
-              "required": {"type": "boolean"}
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              }
             }
           }
         },
@@ -238,8 +252,12 @@
           "items": {
             "type": "object",
             "properties": {
-              "name": {"type": "string"},
-              "type": {"type": "string"}
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
             }
           }
         }
@@ -270,7 +288,9 @@
         "fallback_actions": {
           "type": "array",
           "description": "Safe alternatives to execute if primary execution fails",
-          "items": {"type": "string"}
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
