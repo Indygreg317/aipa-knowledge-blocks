@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://industry-knowledge-blocks.org/schema/trigger-layer.schema.json",
+  "$id": "https://aipa.network/schema/trigger-layer.schema.json",
   "title": "Trigger Layer Schema",
-  "description": "Conditions and events that determine when a Knowledge Block should be evaluated or executed.",
+  "description": "Conditions and events that determine when an AIPA Knowledge Block should be evaluated, invoked, or considered for execution.",
   "type": "object",
   "properties": {
     "trigger_type": {
