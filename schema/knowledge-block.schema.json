@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://industry-knowledge-blocks.org/schema/knowledge-block.schema.json",
+  "$id": "https://aipa.network/schema/knowledge-block.schema.json",
   "title": "Knowledge Block Schema",
-  "description": "Core schema for a Knowledge Block, combining structured decision metadata, trigger context, and runtime execution control.",
+  "description": "Core schema for an AIPA Knowledge Block, combining structured decision metadata, trigger context, and runtime execution control.",
   "type": "object",
   "required": ["index", "execution_control", "risk_posture"],
   "properties": {
