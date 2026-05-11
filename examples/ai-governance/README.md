@@ -1,6 +1,6 @@
 # AI Governance Examples
 
-This directory is reserved for AIPA Knowledge Block examples focused on governed AI workflows, human oversight, policy-aware orchestration, tool-use control, high-risk action routing, and audit-ready AI system behavior.
+This directory contains AIPA Knowledge Block examples focused on governed AI workflows, human oversight, policy-aware orchestration, tool-use control, high-risk action routing, and audit-ready AI system behavior.
 
 AIPA public material is available at [aipa.network](https://aipa.network).
 
@@ -10,7 +10,7 @@ AIPA public material is available at [aipa.network](https://aipa.network).
 
 AI governance examples show how Knowledge Blocks can structure the rules, constraints, and review paths that surround AI-assisted systems.
 
-These examples should demonstrate how AI governance knowledge can be:
+These examples demonstrate how AI governance knowledge can be:
 
 - represented as structured operational guidance
 - tied to invocation conditions
@@ -21,11 +21,19 @@ These examples should demonstrate how AI governance knowledge can be:
 
 ---
 
+## Current Examples
+
+| Example | Format | Purpose |
+|---|---|---|
+| [High-Risk AI Action Escalation](high-risk-action-escalation.md) | Narrative | Shows how a high-impact AI-assisted action is escalated for human review instead of executing automatically |
+| [High-Risk AI Action Escalation JSON](high-risk-action-escalation.json) | JSON | Machine-readable Knowledge Block example for high-risk AI action escalation |
+
+---
+
 ## Example Concepts
 
 Future examples may include:
 
-- high-risk output escalation
 - model-assisted decision review
 - external tool-use approval
 - human oversight routing
