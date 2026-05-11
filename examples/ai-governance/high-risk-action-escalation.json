@@ -1,0 +1,136 @@
+{
+  "index": {
+    "knowledge_block_id": "AIPA-KB-AIGOV-ESCALATE-001",
+    "title": "High-Risk AI Action Escalation",
+    "description": "Example Knowledge Block showing how a high-impact AI-assisted action is escalated for human review instead of being executed automatically.",
+    "version": "v0.1",
+    "domain": "ai-governance",
+    "category": "human-oversight",
+    "tags": [
+      "aipa",
+      "knowledge-block",
+      "ai-governance",
+      "human-review",
+      "high-risk-action",
+      "runtime-revalidation",
+      "audit-required"
+    ],
+    "owner": "ai-governance-team",
+    "status": "active"
+  },
+  "trigger": {
+    "trigger_type": "event",
+    "trigger_source": "ai-assisted-workflow",
+    "trigger_conditions": [
+      "ai_action_proposed",
+      "action_classified_high_impact",
+      "target_environment_is_production"
+    ],
+    "preconditions": [
+      "audit_logging_available",
+      "escalation_path_defined",
+      "governance_policy_available"
+    ],
+    "priority": "critical"
+  },
+  "logic": [
+    "High-impact AI-assisted actions must not execute automatically without required human review.",
+    "If the proposed action affects a user, customer, account, system, record, or operational process materially, escalation is required.",
+    "Model confidence is not sufficient authority for autonomous execution of high-impact actions.",
+    "If required reviewer authority is missing, execution must be blocked or escalated.",
+    "Audit logging is required for proposed action, risk classification, decision result, and escalation path."
+  ],
+  "evidence": [
+    "ai_governance_policy_high_impact_review_required",
+    "production_environment_detected",
+    "action_classification_high_impact",
+    "audit_logging_available"
+  ],
+  "execution_control": {
+    "requires_revalidation": true,
+    "required_authority": [
+      "ai-governance-reviewer"
+    ],
+    "authority_mode": "strict",
+    "delta_threshold": 0.1,
+    "delta_mode": "strict",
+    "evidence_freshness_window": "P30D",
+    "block_on_policy_mismatch": true,
+    "fail_behavior": "escalate",
+    "allowed_actions": [
+      "create_human_review_task",
+      "preserve_recommendation_context",
+      "record_audit"
+    ],
+    "prohibited_actions": [
+      "execute_high_impact_action_without_review",
+      "bypass_human_oversight",
+      "delete_audit_record",
+      "override_policy_without_authority"
+    ],
+    "audit_log_required": true
+  },
+  "revalidation": {
+    "compare_context": true,
+    "compare_policy": true,
+    "compare_inputs": true,
+    "compare_risk_posture": true,
+    "compare_evidence": true,
+    "on_mismatch": "escalate"
+  },
+  "risk_posture": {
+    "impact": "high",
+    "likelihood": 0.4,
+    "uncertainty": 0.35,
+    "system_state": "production",
+    "exposure_window": "persistent",
+    "max_allowed_score": 0.3
+  },
+  "decision_time_state": {
+    "policy": "human_review_required_for_high_impact_ai_actions",
+    "authority": "ai-governance-reviewer",
+    "environment": "production",
+    "audit_logging": "available",
+    "evidence_status": "fresh"
+  },
+  "execution_time_state": {
+    "proposed_action": "execute_high_impact_ai_assisted_recommendation",
+    "action_classification": "high_impact",
+    "user_or_system_impact": "material",
+    "model_confidence": "medium",
+    "policy": "human_review_required_for_high_impact_ai_actions",
+    "authority": "reviewer_approval_missing",
+    "environment": "production",
+    "audit_logging": "available",
+    "evidence_status": "fresh"
+  },
+  "evaluation_result": {
+    "context_match": true,
+    "policy_match": true,
+    "inputs_valid": true,
+    "risk_within_auto_execution_threshold": false,
+    "evidence_fresh": true,
+    "authority_valid_for_auto_execution": false,
+    "human_review_required": true
+  },
+  "decision": "ESCALATE",
+  "reason": [
+    "high_impact_action",
+    "human_review_required",
+    "authority_missing_for_auto_execution",
+    "risk_exceeds_auto_execution_threshold"
+  ],
+  "outcomes": [
+    "automatic_execution_prevented",
+    "human_review_task_created",
+    "recommendation_context_preserved",
+    "audit_record_created"
+  ],
+  "audit": {
+    "timestamp": "2026-05-10T00:00:00Z",
+    "reviewer": "ai-governance-reviewer-required",
+    "logged": true,
+    "decision_recorded": "ESCALATE",
+    "notes": "High-impact AI-assisted action requires human review before execution. Automatic execution prevented."
+  }
+}
