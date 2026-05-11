@@ -1,33 +1,54 @@
 {
   "index": {
-    "knowledge_block_id": "KB-COMPLIANCE-001",
-    "title": "Compliance Decision Block",
-    "description": "Template for policy, audit, and regulatory decision control.",
+    "knowledge_block_id": "AIPA-KB-COMPLIANCE-001",
+    "title": "Compliance Knowledge Block Template",
+    "description": "Starter template for governed compliance, policy, audit, and regulatory decision control.",
     "version": "0.1.0",
     "domain": "compliance",
     "category": "policy-enforcement",
-    "tags": ["compliance", "audit", "policy", "governance"],
+    "tags": [
+      "aipa",
+      "knowledge-block",
+      "compliance",
+      "audit",
+      "policy",
+      "governance"
+    ],
     "owner": "compliance-team",
     "status": "draft"
   },
   "trigger": {
     "trigger_type": "event",
     "trigger_source": "compliance-workflow",
-    "trigger_conditions": ["policy_check_requested"],
-    "preconditions": ["evidence_available", "policy_version_current"],
+    "trigger_conditions": [
+      "policy_check_requested"
+    ],
+    "preconditions": [
+      "evidence_available",
+      "policy_version_current"
+    ],
     "priority": "high"
   },
   "execution_control": {
     "requires_revalidation": true,
-    "required_authority": ["compliance-officer"],
+    "required_authority": [
+      "compliance-officer"
+    ],
     "authority_mode": "strict",
     "delta_threshold": 0.1,
     "delta_mode": "strict",
     "evidence_freshness_window": "P30D",
     "block_on_policy_mismatch": true,
     "fail_behavior": "block",
-    "allowed_actions": ["review", "approve", "escalate"],
-    "prohibited_actions": ["override_policy", "delete_audit_record"],
+    "allowed_actions": [
+      "review",
+      "approve",
+      "escalate"
+    ],
+    "prohibited_actions": [
+      "override_policy",
+      "delete_audit_record"
+    ],
     "audit_log_required": true
   },
   "revalidation": {
@@ -52,5 +73,9 @@
     "If authority is invalid, escalate."
   ],
   "evidence": [],
-  "outcomes": ["ALLOW", "BLOCK", "ESCALATE"]
+  "outcomes": [
+    "ALLOW",
+    "BLOCK",
+    "ESCALATE"
+  ]
 }
