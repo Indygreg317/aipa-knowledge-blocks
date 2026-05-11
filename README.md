@@ -1,16 +1,53 @@
-<img width="1407" height="768" alt="aipa knowledge block repo image" src="https://github.com/user-attachments/assets/3c9a8ae5-57f5-4184-95d0-2a429e6f9df5" />
+# AIPA Knowledge Blocks
 
+**Structured knowledge architecture for governed AI systems.**
 
+AIPA Knowledge Blocks are modular, machine-readable units for packaging operational knowledge, decision logic, evidence, governance metadata, runtime controls, and audit behavior.
 
+This repository is maintained as part of the **Artificial Intelligence Partnership Association (AIPA)** open governance work.
 
+**Public home:** [aipa.network](https://aipa.network)  
+**Focus:** AI governance infrastructure, structured knowledge, controlled invocation, runtime revalidation, and traceable execution.
 
+---
 
+## What This Repository Provides
 
-# AIPA - AI Partnership Association
+This repository defines a reference architecture for Knowledge Blocks: structured units of operational knowledge that can be discovered, invoked, evaluated, governed, and audited.
 
-## Runtime Governance Upgrade
+Instead of treating knowledge as loose text, prompts, or unbounded context, a Knowledge Block separates knowledge into explicit layers:
 
-The repository now includes a governance-oriented runtime architecture designed to separate:
+- **Index Layer** — identity, metadata, classification, ownership, and discovery
+- **Trigger Layer** — activation conditions, event bindings, and invocation rules
+- **Runtime Layer** — execution control, revalidation, risk posture, state, context, and fail-safe behavior
+- **Full Layer** — integrated block structure combining the above layers into a complete governed artifact
+
+The purpose is simple:
+
+> Knowledge Blocks define what a decision or operational rule is. Runtime control determines whether it is still allowed to execute.
+
+---
+
+## Why Knowledge Blocks Matter
+
+AI systems increasingly rely on external context, retrieval, tools, agents, workflows, policies, and human-approved operating rules. When that knowledge is stored as plain text or informal prompts, it becomes difficult to verify, audit, reuse, or safely execute.
+
+Knowledge Blocks address this by making operational knowledge:
+
+- **Structured** — fields, schemas, and controlled vocabularies replace loose context
+- **Discoverable** — blocks can be indexed, searched, classified, and reused
+- **Trigger-aware** — invocation conditions are explicit rather than hidden in prompts
+- **Runtime-aware** — execution depends on current conditions, not just prior approval
+- **Governed** — ownership, authority, trust level, verification status, and review state are visible
+- **Auditable** — execution decisions, failures, overrides, and revalidations can be recorded
+
+A Knowledge Block is not merely stored knowledge. It is a governed decision unit that can be checked before action.
+
+---
+
+## Runtime Governance Model
+
+The repository includes a governance-oriented runtime architecture designed to separate:
 
 - AI inference
 - intent translation
@@ -19,156 +56,95 @@ The repository now includes a governance-oriented runtime architecture designed 
 - audit logging
 - human oversight
 
-Core additions include:
+Core runtime governance artifacts include:
 
 - Intent Envelope Schema
 - Action Registry Schema
 - Signer Registry Schema
 - Audit Record Schema
 
-These artifacts formalize a bounded operational trust architecture for AI-assisted systems.
-
-
-
-Artificial Intelligence Partnership Association
-
-### Knowledge Blocks Framework
-
-Deterministic execution control for structured decisions.
-
-**industry-knowledge-blocks** is a deterministic framework for representing, validating, governing, and safely executing domain expertise, policy decisions, and operational knowledge in production systems.
-
-
-This framework combines:
-
-- Structured Knowledge: Encodes decision criteria, context, and constraints
-- Execution Control: Revalidates decisions at runtime and enforces risk and authority constraints
-- Governance: Provides trust classification, verification workflows, and auditability
-
-  
-Knowledge Blocks define decisions.
-Execution control determines whether those decisions are still allowed to run.
-
-### Why Execution Control Matters
-
-Knowledge is static. Execution is dynamic.
-
-Between decision and execution, conditions change:
-- system state diverges
-- policies shift
-- risk increases
-- authority is revoked
-
-Without runtime control, previously valid decisions can become unsafe.
-
-## Examples
-
-Execution control in practice:
-
-- [Blocked Execution Example](examples/execution-control/blocked-execution.md)
-- [Allowed Execution Example](examples/execution-control/allowed-execution.md)
-- [Blocked Execution (JSON)](examples/execution-control/blocked-execution.json)
-  
-These examples demonstrate how decisions are validated at runtime and either allowed or prevented based on current conditions.
-**Structured knowledge alone is not enough.** A Knowledge Block without execution control is a historical artifact—valid when authored, potentially dangerous when executed.
-
-Execution control solves this by:
-- **Revalidating** Knowledge Block evidence at runtime against current state
-- **Comparing deltas** between decision time and execution time to detect material changes
-- **Assessing risk** in real-time and gating execution based on current risk posture
-- **Enforcing authority** constraints at execution, not just at approval
-- **Failing safely** with deterministic, auditable fallback behaviors
-- **Recording everything** for post-hoc compliance verification and forensics
-
-### Why Trust Must Be Revalidated at Runtime
-
-Trust levels (see [docs/trust-levels.md](docs/trust-levels.md)) measure confidence in a Knowledge Block's reliability based on review, testing, and production history. However:
-
-- Trust is **backward-looking**: It reflects past performance and reviews
-- Trust is **static at authoring time**: Once approved, it doesn't update
-- Trust assumes **stable context**: The domain, environment, and regulations you trusted at approval time may have changed
-- Trust can become **invalid**: New threats, policy changes, or operational incidents can invalidate prior trust decisions
-
-Runtime revalidation asks: "Is this still true right now?" It treats runtime as a first-class decision point, not an implementation detail.
-
-### How the Framework Fits Together
-
-At a high level, the system separates what a decision is from whether it is allowed to execute.
-
-| Component | Purpose | Lifecycle |
-|-----------|---------|-----------|
-| **Structured Knowledge** | Encode decision criteria, dependencies, constraints | Authors draft Knowledge Blocks, experts review, governance approves |
-| **Layered Schemas** | Provide machine-readable structure with clear separation of concerns | Index (metadata), Trigger (activation), Runtime (execution control), Full (integrated) |
-| **Trust & Verification** | Establish credibility and compliance | Track review status, empirical success, policy adherence, evidence freshness |
-| **Execution Control** | Revalidate, gate risk, enforce authority, ensure safe failure | Runtime engine evaluates current conditions, applies controls, logs decisions |
-| **Governance** | Provide oversight, accountability, traceability | Approval workflows, audit logs, escalation procedures, forensic review |
-
-At execution time:
-1. A Knowledge Block is retrieved
-2. **Execution control** checks: Is evidence still fresh? Is risk acceptable? Does executor have authority?
-3. If all checks pass, execution proceeds with full **audit logging**
-4. If any check fails, **fail-safe behavior** is applied (typically BLOCK, ESCALATE, or DEFER)
-5. All decisions are recorded in **immutable audit trails** for compliance and forensics
-
-See [docs/execution-control.md](docs/execution-control.md) for the complete framework and [schema/runtime-layer.schema.json](schema/runtime-layer.schema.json) for the formal specification.
+Together, these artifacts support bounded operational trust for AI-assisted systems. The goal is not to assume that a model should act because it produced an answer. The goal is to verify whether an action remains authorized, valid, and safe under current conditions.
 
 ---
-Decision Lifecycle
 
-Author → Review → Approve → Execute → Revalidate → Allow / Block → Audit
+## Execution Control
+
+Knowledge is stateful. Execution is dynamic.
+
+A Knowledge Block may be valid when authored, reviewed, or approved, but unsafe when executed. Between approval and runtime, conditions can change:
+
+- system state may drift
+- policies may shift
+- evidence may expire
+- risk may increase
+- authority may be revoked
+- environmental assumptions may no longer hold
+
+Execution control solves this by:
+
+- revalidating evidence at runtime
+- comparing decision-time and execution-time conditions
+- assessing current risk posture
+- enforcing authority constraints at execution time
+- applying deterministic fail-safe behaviors
+- recording execution decisions for audit and forensic review
+
+Common fail-safe behaviors include **BLOCK**, **DEFER**, **ESCALATE**, **DEGRADE**, **AUDIT**, and **ABORT**.
+
+---
 
 ## Repository Structure
 
-```
-industry-knowledge-blocks/
-├── README.md                              # This file
-├── LICENSE                                # License terms
-├── CONTRIBUTING.md                        # Contribution guidelines
-├── .gitignore                             # Git ignore rules
+```text
+aipa-knowledge-blocks/
+├── README.md
+├── LICENSE
+├── CONTRIBUTING.md
 │
-├── docs/                                  # Documentation and governance
-│   ├── overview.md                        # Project overview and concepts
-│   ├── architecture.md                    # Layered architecture
-│   ├── schema.md                          # Schema structure and validation
-│   ├── execution-control.md               # Runtime revalidation and control framework
-│   ├── governance.md                      # Approval workflows and oversight
-│   ├── trust-levels.md                    # Trust classification and evolution
-│   ├── verification-status.md             # Verification lifecycle and states
-│   ├── field-definitions.md               # Core field definitions and data types
-│   ├── industry-playbooks.md              # Curated collections for specific sectors
-│   └── controlled-vocab.md                # Master terminology and controlled vocabulary
+├── docs/
+│   ├── overview.md
+│   ├── architecture.md
+│   ├── schema.md
+│   ├── execution-control.md
+│   ├── governance.md
+│   ├── trust-levels.md
+│   ├── verification-status.md
+│   ├── field-definitions.md
+│   ├── industry-playbooks.md
+│   └── controlled-vocab.md
 │
-├── schema/                                # JSON Schema specifications
-│   ├── knowledge-block.schema.json        # Main Knowledge Block schema
-│   ├── index-layer.schema.json            # Metadata and discovery layer
-│   ├── trigger-layer.schema.json          # Event and condition activation
-│   ├── runtime-layer.schema.json          # Execution control and state management
-│   └── full-layer.schema.json             # Complete integrated schema
+├── schema/
+│   ├── knowledge-block.schema.json
+│   ├── index-layer.schema.json
+│   ├── trigger-layer.schema.json
+│   ├── runtime-layer.schema.json
+│   └── full-layer.schema.json
 │
-├── templates/                             # Reusable Knowledge Block templates
-│   ├── blank-knowledge-block.json         # Empty template for new blocks
-│   ├── carbon-template.json               # Carbon management template
-│   ├── compliance-template.json           # Regulatory compliance template
-│   └── operations-template.json           # Operations improvement template
+├── templates/
+│   ├── blank-knowledge-block.json
+│   ├── carbon-template.json
+│   ├── compliance-template.json
+│   └── operations-template.json
 │
-└── examples/                              # Complete worked examples
+└── examples/
     ├── carbon/
-    │   └── carbon.md                      # Full carbon management example
     ├── compliance/
-    │   └── compliance.md                  # Complete compliance framework example
-    └── operations/
-        └── operations.md                  # Detailed operations processes example
+    ├── operations/
+    └── execution-control/
 ```
 
-### Key Documents
+---
 
-- **[docs/overview.md](docs/overview.md)**: Concepts, use cases, and benefit overview
-- **[docs/architecture.md](docs/architecture.md)**: Layered schema architecture
-- **[docs/execution-control.md](docs/execution-control.md)**: Execution-time revalidation, risk control, and authority enforcement
-- **[docs/governance.md](docs/governance.md)**: Approval workflows, review processes, and organizational oversight
-- **[docs/trust-levels.md](docs/trust-levels.md)**: How Knowledge Blocks are classified by confidence level
-- **[docs/verification-status.md](docs/verification-status.md)**: Compliance verification and evidence freshness
-- **[schema/](schema/)**: Formal JSON schemas for validation and implementation
+## Key Documents
+
+- [Overview](docs/overview.md) — high-level purpose and use cases
+- [Architecture](docs/architecture.md) — four-layer Knowledge Block structure
+- [Execution Control](docs/execution-control.md) — runtime revalidation, risk gating, and authority enforcement
+- [Governance](docs/governance.md) — review, approval, oversight, and accountability workflows
+- [Trust Levels](docs/trust-levels.md) — confidence classification and maturity states
+- [Verification Status](docs/verification-status.md) — verification lifecycle and evidence freshness
+- [Schema Reference](docs/schema.md) — schema structure and validation guidance
+- [Controlled Vocabulary](docs/controlled-vocab.md) — terminology normalization
 
 ---
 
@@ -176,53 +152,75 @@ industry-knowledge-blocks/
 
 ### For Knowledge Authors
 
-1. Choose a template from [templates/](templates/) matching your domain
-2. Follow [docs/architecture.md](docs/architecture.md) to understand the layered structure
-3. Reference [docs/field-definitions.md](docs/field-definitions.md) for required and optional fields
-4. Study [examples/](examples/) to see complete, working Knowledge Blocks
-5. Submit your draft for review per [CONTRIBUTING.md](CONTRIBUTING.md)
+1. Choose a template from [templates/](templates/).
+2. Review the [architecture guide](docs/architecture.md).
+3. Use [field definitions](docs/field-definitions.md) to populate required fields.
+4. Study the [examples](examples/) before creating a new block.
+5. Submit proposed blocks through the process described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### For Validators and Reviewers
 
-1. Read [docs/governance.md](docs/governance.md) for approval workflows
-2. Use [docs/trust-levels.md](docs/trust-levels.md) to assess knowledge maturity
-3. Check [docs/verification-status.md](docs/verification-status.md) for compliance criteria
-4. Validate submissions against [schema/full-layer.schema.json](schema/full-layer.schema.json)
+1. Read [governance guidance](docs/governance.md).
+2. Assess maturity using [trust levels](docs/trust-levels.md).
+3. Check verification status using [verification-status.md](docs/verification-status.md).
+4. Validate complete blocks against [schema/full-layer.schema.json](schema/full-layer.schema.json).
 
 ### For Runtime Engineers
 
-1. Review [docs/execution-control.md](docs/execution-control.md) for the control framework
-2. Reference [schema/runtime-layer.schema.json](schema/runtime-layer.schema.json) for formal specification
-3. Implement revalidation, delta comparison, risk gating, and authority enforcement per framework
-4. Integrate audit logging and observability as specified in the schema
-5. Design fail-safe behaviors (BLOCK, DEFER, ESCALATE, DEGRADE, AUDIT, ABORT)
+1. Review [execution-control.md](docs/execution-control.md).
+2. Implement runtime revalidation, delta comparison, risk gating, and authority enforcement.
+3. Use [schema/runtime-layer.schema.json](schema/runtime-layer.schema.json) as the formal runtime reference.
+4. Record allow, block, escalation, fallback, and override decisions for auditability.
 
 ---
 
 ## Core Principles
 
-1. **Knowledge is Stateful**: Structured knowledge captures decision context at a moment in time; runtime execution must revalidate that context.
-
-2. **Execution is a Decision Point**: Runtime conditions (risk, policy, authority, state) are inputs to the execution decision, not mere implementation details.
-
-3. **Trust Requires Continuous Verification**: Trust levels measure historical confidence; verification status ensures present-day compliance. Both are runtime inputs.
-
-4. **Fail Safety Over Convenience**: When control conditions are uncertain or unmet, the default is to block, defer, or escalate—never to silently proceed.
-
-5. **Audit Everything**: All control decisions—approvals, revalidations, risk assessments, authority checks, and fail-safe actions—are recorded immutably.
-
-6. **Transparency and Traceability**: Every Knowledge Block knows its own state (verified, expired, trusted), and every execution decision is explainable through audit logs and control framework records.
+1. **Knowledge is not execution.** A Knowledge Block can define a decision without automatically authorizing action.
+2. **Runtime is a governance boundary.** Execution must be checked against current state, current authority, and current risk.
+3. **Trust must be revalidated.** Prior approval does not guarantee present authorization.
+4. **Failure must be safe.** Uncertain or invalid conditions should block, defer, degrade, or escalate rather than silently proceed.
+5. **Auditability is required.** Governance decisions must leave a traceable record.
+6. **Human oversight remains visible.** Authority, review state, and escalation paths should not disappear behind automation.
 
 ---
 
-## Use Cases
+## Example Use Cases
 
-- **Compliance Automation**: Encode regulations and policies as executable Knowledge Blocks with audit trails
-- **Incident Response**: Pre-authorize response actions with runtime controls for safe, auditable incident handling
-- **Configuration Management**: Approve infrastructure changes as Knowledge Blocks; enforce revalidation and risk gates at deployment
-- **Operational Decisions**: Encode best practices and decision criteria; ensure execution remains aligned with current policy and risk posture
-- **Security Controls**: Formalize security policies, approval chains, and enforcement at runtime
-- **Governance & Audits**: Provide complete, immutable records of decisions, approvals, executions, and failures
+- AI governance and policy enforcement
+- Compliance automation
+- Structured retrieval for governed AI systems
+- Agentic workflow control
+- Human-in-the-loop decision support
+- Incident response playbooks
+- Configuration and deployment approvals
+- Operational decision frameworks
+- Security control execution
+- Audit-ready AI system documentation
+
+---
+
+## Relationship to AIPA
+
+AIPA — the **Artificial Intelligence Partnership Association** — focuses on practical governance infrastructure for trustworthy AI systems.
+
+This repository supports that mission by providing a structured knowledge format for AI systems that need traceability, auditability, controlled invocation, runtime revalidation, and human oversight.
+
+Learn more at [aipa.network](https://aipa.network).
+
+---
+
+## Status
+
+This repository is an active reference architecture. The schemas, examples, and documentation are expected to evolve as the AIPA governance model matures.
+
+Current emphasis:
+
+- stronger public-facing documentation
+- cleaner schema identity
+- better examples and artifacts
+- alignment with AIPA governance language
+- practical implementation paths for builders and reviewers
 
 ---
 
@@ -230,14 +228,16 @@ industry-knowledge-blocks/
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, review processes, and how to propose new Knowledge Blocks or framework improvements.
 
+---
+
 ## License
 
-See [LICENSE](LICENSE) for full license terms.
+See [LICENSE](LICENSE) for license terms.
 
 ---
 
-## Questions?
+## Questions
 
-Refer to the relevant documentation in [docs/](docs/) or open an issue with the `question` label.
+Open an issue with the `question` label or review the documentation in [docs/](docs/).
 
-For framework design discussions, see [docs/architecture.md](docs/architecture.md) and [docs/execution-control.md](docs/execution-control.md).
+For broader AIPA standards, governance work, and public-facing material, visit [aipa.network](https://aipa.network).
