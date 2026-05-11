@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://industry-knowledge-blocks.org/schema/full-layer.schema.json",
+  "$id": "https://aipa.network/schema/full-layer.schema.json",
   "title": "Full Layer Schema",
-  "description": "Integrated schema for a fully specified Knowledge Block, including index, trigger, runtime control, evidence, logic, and outcomes.",
+  "description": "Integrated schema for a fully specified AIPA Knowledge Block, including index, trigger, runtime control, evidence, logic, outcomes, and audit metadata.",
   "type": "object",
   "required": [
     "index",
