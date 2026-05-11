@@ -1,53 +1,121 @@
 {
-  "knowledge_block_id": "KB-DEPLOY-001",
-  "action": "deploy_configuration_update",
-  "environment": "production",
-
+  "index": {
+    "knowledge_block_id": "AIPA-KB-DEPLOY-BLOCK-001",
+    "title": "Blocked Configuration Deployment",
+    "description": "Example Knowledge Block showing a deployment action blocked after runtime revalidation fails.",
+    "version": "v0.1",
+    "domain": "operations",
+    "category": "deployment-control",
+    "tags": [
+      "execution-control",
+      "runtime-revalidation",
+      "deployment",
+      "blocked-execution",
+      "audit-required"
+    ],
+    "owner": "operations-team",
+    "status": "active"
+  },
+  "trigger": {
+    "trigger_type": "event",
+    "trigger_source": "deployment-pipeline",
+    "trigger_conditions": [
+      "configuration_update_requested",
+      "target_environment_is_production"
+    ],
+    "preconditions": [
+      "deployment_request_approved",
+      "authority_token_present",
+      "audit_logging_available"
+    ],
+    "priority": "high"
+  },
+  "logic": [
+    "A production configuration update may proceed only when the system state is stable.",
+    "Execution must be blocked if an active incident creates a deployment restriction.",
+    "Runtime risk posture must remain within the configured threshold.",
+    "Authority must remain valid at execution time, but authority alone is not sufficient if policy or risk checks fail."
+  ],
+  "evidence": [
+    "deployment_request_approved",
+    "production_state_stable_at_approval_time",
+    "devops_authority_valid_at_approval_time"
+  ],
+  "execution_control": {
+    "requires_revalidation": true,
+    "required_authority": [
+      "devops-engineer"
+    ],
+    "authority_mode": "strict",
+    "delta_threshold": 0.2,
+    "delta_mode": "strict",
+    "evidence_freshness_window": "PT6H",
+    "block_on_policy_mismatch": true,
+    "fail_behavior": "block",
+    "allowed_actions": [
+      "deploy_configuration_update"
+    ],
+    "prohibited_actions": [
+      "deploy_during_active_incident",
+      "deploy_without_audit_log",
+      "deploy_without_valid_authority"
+    ],
+    "audit_log_required": true
+  },
+  "revalidation": {
+    "compare_context": true,
+    "compare_policy": true,
+    "compare_inputs": true,
+    "compare_risk_posture": true,
+    "compare_evidence": true,
+    "on_mismatch": "block"
+  },
+  "risk_posture": {
+    "impact": "high",
+    "likelihood": 0.7,
+    "uncertainty": 0.3,
+    "system_state": "production",
+    "exposure_window": "persistent",
+    "max_allowed_score": 0.5
+  },
   "decision_time_state": {
     "system_state": "stable",
     "risk_posture": "low",
     "policy": "deployments_allowed",
-    "authority": "devops_engineer"
+    "authority": "devops-engineer",
+    "evidence_status": "fresh"
   },
-
   "execution_time_state": {
     "system_state": "incident_active",
     "risk_posture": "high",
-    "policy": "deployments_blocked",
-    "authority": "devops_engineer"
+    "policy": "deployments_blocked_during_incident",
+    "authority": "devops-engineer",
+    "evidence_status": "fresh"
   },
-
-  "execution_control": {
-    "requires_revalidation": true,
-    "delta_threshold": 0.2,
-    "delta_mode": "strict",
-    "fail_behavior": "block"
-  },
-
-  "revalidation": {
-    "compare_context": true,
-    "compare_policy": true,
-    "compare_risk_posture": true,
-    "on_mismatch": "block"
-  },
-
   "evaluation_result": {
     "context_match": false,
     "policy_match": false,
-    "risk_within_threshold": false
+    "inputs_valid": true,
+    "risk_within_threshold": false,
+    "evidence_fresh": true,
+    "authority_valid": true
   },
-
-  "decision": "BLOCKED",
-
+  "decision": "BLOCK",
   "reason": [
+    "context_drift",
     "policy_mismatch",
-    "risk_threshold_exceeded",
-    "context_drift"
+    "risk_threshold_exceeded"
   ],
-
+  "outcomes": [
+    "configuration_update_not_deployed",
+    "incident_response_team_escalated",
+    "audit_record_created"
+  ],
   "audit": {
-    "timestamp": "2026-XX-XX",
+    "timestamp": "2026-05-10T00:00:00Z",
     "reviewer": "system",
-    "logged": true
+    "logged": true,
+    "decision_recorded": "BLOCK",
+    "notes": "Runtime revalidation failed. Deployment blocked because production entered active incident state and deployment policy changed."
   }
 }
